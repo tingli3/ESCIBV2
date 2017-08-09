@@ -70,7 +70,7 @@ int main(int argc, char ** argv) {
 	printf("Y Range: %lf - %lf\n", yMin, yMax);
 
 	readPoints(inputCas, x, y);
-	readPoints(inputCon, x + countCas, y + countCon);
+	readPoints(inputCon, x + countCas, y + countCas);
 
 	for(int i = 0; i < countCas; i++) {
 		ind[i] = 1;
