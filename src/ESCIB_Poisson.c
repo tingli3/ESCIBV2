@@ -118,7 +118,7 @@ int main(int argc, char ** argv) {
 		exit(1);
 	}
 
-	for(int i = 0; i < countE; i++)
+	for(int i = 0; i < count; i++)
 	{
 		//lambda[i] = (double)(countPointsB[i]) * countE / countB;
 		lambda[i] = (double)(countPointsB[i]) * countE * baseLineRatio / countB;

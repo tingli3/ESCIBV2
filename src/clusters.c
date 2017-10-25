@@ -140,7 +140,7 @@ int * doClusterPoi(double * x, double * y, int * ind, int * index, int nBlockX, 
 
 	for(int i = 0; i < count; i++)
 	{
-		if(clusterID[i] != 0)
+		if(clusterID[i] != 0 || ind[i] == 0)
 			continue;
 		pointsToDo[0] = i;
 		nPToDo = 1;
@@ -150,15 +150,9 @@ int * doClusterPoi(double * x, double * y, int * ind, int * index, int nBlockX, 
 		coreCount = 1;
 
 		inCluster[i] = cID;
-		nEInCluster = 0;
+		nEInCluster = 1;
 		nBInCluster = 0;
 
-		if(ind[i] == 0) {
-			nBInCluster = 1;
-		}
-		else {
-			nEInCluster = 1;
-		}
 		while(nPToDo > 0) {
 			nPToDo --;
 			cX = x[pointsToDo[nPToDo]];		
@@ -179,15 +173,15 @@ int * doClusterPoi(double * x, double * y, int * ind, int * index, int nBlockX, 
 					if(inCluster[iNb] != cID) {
 						if(dist2 >= ((x[iNb] - cX) * (x[iNb] - cX) + (y[iNb] - cY) * (y[iNb] - cY))) {
 							if(clusterID[iNb] == 0) {
-								pointsToDo[nPToDo] = iNb;
-								nPToDo ++;
-								coreCount ++;
 								clusterID[iNb] = cID;
 								if(ind[iNb] == 0) {
+									pointsToDo[nPToDo] = iNb;
+									nPToDo ++;
 									nBInCluster ++;
 								}
 								else {
 									nEInCluster ++;
+									coreCount ++;
 								}
 							}
 							else if(clusterID[iNb] == -1 && nonCorePoints) {
@@ -315,7 +309,7 @@ int * doClusterBer(double * x, double * y, int * ind, int * index, int nBlockX, 
 
 	for(int i = 0; i < count; i++)
 	{
-		if(clusterID[i] != 0)
+		if(clusterID[i] != 0 || ind[i] == 0)
 			continue;
 		pointsToDo[0] = i;
 		nPToDo = 1;
@@ -325,15 +319,8 @@ int * doClusterBer(double * x, double * y, int * ind, int * index, int nBlockX, 
 		coreCount = 1;
 
 		inCluster[i] = cID;
-		nCasInCluster = 0;
+		nCasInCluster = 1;
 		nConInCluster = 0;
-
-		if(ind[i] == 0) {
-			nConInCluster ++;
-		}
-		else {
-			nCasInCluster ++;
-		}
 
 		while(nPToDo > 0) {
 			nPToDo --;
@@ -355,15 +342,16 @@ int * doClusterBer(double * x, double * y, int * ind, int * index, int nBlockX, 
 					if(inCluster[iNb] != cID) {
 						if(dist2 >= ((x[iNb] - cX) * (x[iNb] - cX) + (y[iNb] - cY) * (y[iNb] - cY))) {
 							if(clusterID[iNb] == 0) {
-								pointsToDo[nPToDo] = iNb;
-								nPToDo ++;
-								coreCount ++;
 								clusterID[iNb] = cID;
+
 								if(ind[iNb] == 0) {
 									nConInCluster ++;
 								}
 								else {
+									pointsToDo[nPToDo] = iNb;
+									nPToDo ++;
 									nCasInCluster ++;
+									coreCount ++;
 								}
 							}
 							else if(clusterID[iNb] == -1 && nonCorePoints) {
